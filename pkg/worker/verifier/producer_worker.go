@@ -366,8 +366,7 @@ func (pw *ProducerWorker) produceInner(n int64) (int64, []BadOffset, error) {
 				}
 				errHandler("Produce failed: %v", err)
 				errored = true
-			}
-			if expectOffset != r.Offset {
+			} else if expectOffset != r.Offset {
 				log.Warnf("Produced at unexpected offset %d (expected %d) on partition %d", r.Offset, expectOffset, r.Partition)
 				pw.Status.OnBadOffset()
 				bad_offsets <- BadOffset{r.Partition, r.Offset}
